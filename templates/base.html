@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Миний дэлгүүр{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <a class="logo" href="{{ url_for('index') }}">🛍 Миний дэлгүүр</a>
+  <form class="search" action="{{ url_for('index') }}">
+    <input name="q" placeholder="Бараа хайх..." value="{{ request.args.get('q','') }}">
+  </form>
+  <nav>
+    <a href="{{ url_for('cart') }}">Сагс ({{ cart_count }})</a>
+    {% if session.get('is_admin') %}
+      <a href="{{ url_for('admin') }}">Админ</a>
+      <a href="{{ url_for('admin_logout') }}">Гарах</a>
+    {% endif %}
+  </nav>
+</header>
+<main>
+  {% for cat, msg in get_flashed_messages(with_categories=true) %}
+    <div class="flash {{ cat }}">{{ msg }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</main>
+<footer>© Миний дэлгүүр · <a href="{{ url_for('admin_login') }}">Админ</a></footer>
+</body>
+</html>
