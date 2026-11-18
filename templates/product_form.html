@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ 'Бараа засах' if p else 'Шинэ бараа' }}</h1>
+<form method="post" class="form">
+  <label>Нэр <input name="name" value="{{ p.name if p }}" required></label>
+  <label>Тайлбар <textarea name="description" rows="3">{{ p.description if p }}</textarea></label>
+  <label>Үнэ (₮) <input type="number" name="price" min="0" value="{{ p.price if p }}" required></label>
+  <label>Үлдэгдэл <input type="number" name="stock" min="0" value="{{ p.stock if p else 0 }}" required></label>
+  <label>Зургийн URL <input name="image_url" value="{{ p.image_url if p }}"></label>
+  <button>Хадгалах</button>
+</form>
+{% endblock %}
