@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>✅ Баярлалаа!</h1>
+<p>Таны захиалга #{{ order.id }} амжилттай бүртгэгдлээ. Бид тантай <strong>{{ order.phone }}</strong> дугаараар холбогдоно.</p>
+<p>Нийт дүн: {{ order.total|mnt }}</p>
+<p><a href="{{ url_for('index') }}">Дэлгүүр рүү буцах</a></p>
+{% endblock %}
