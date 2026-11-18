@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{% if q %}«{{ q }}» хайлтын үр дүн{% else %}Бүх бараа{% endif %}</h1>
+{% if not products %}<p>Бараа олдсонгүй.</p>{% endif %}
+<div class="grid">
+  {% for p in products %}
+  <div class="card">
+    <a href="{{ url_for('product', pid=p.id) }}">
+      <img src="{{ p.image_url or 'https://picsum.photos/seed/'~p.id~'/400/300' }}" alt="{{ p.name }}">
+      <h3>{{ p.name }}</h3>
+    </a>
+    <p class="price">{{ p.price|mnt }}</p>
+    {% if p.stock > 0 %}
+      <form method="post" action="{{ url_for('cart_add', pid=p.id) }}">
+        <input type="hidden" name="qty" value="1">
+        <button>Сагсанд нэмэх</button>
+      </form>
+    {% else %}<p class="muted">Дууссан</p>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
