@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Админ</h1>
+<p><a class="btn" href="{{ url_for('admin_product') }}">+ Шинэ бараа</a></p>
+<h2>Бараанууд</h2>
+<table>
+  <tr><th>ID</th><th>Нэр</th><th>Үнэ</th><th>Үлдэгдэл</th><th></th></tr>
+  {% for p in products %}
+  <tr>
+    <td>{{ p.id }}</td><td>{{ p.name }}</td><td>{{ p.price|mnt }}</td><td>{{ p.stock }}</td>
+    <td>
+      <a href="{{ url_for('admin_product', pid=p.id) }}">Засах</a>
+      <form method="post" action="{{ url_for('admin_delete', pid=p.id) }}" style="display:inline"
+            onsubmit="return confirm('Устгах уу?')"><button class="link">Устгах</button></form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<h2>Сүүлийн захиалгууд</h2>
+<table>
+  <tr><th>#</th><th>Огноо</th><th>Нэр</th><th>Утас</th><th>Хаяг</th><th>Бараа</th><th>Дүн</th></tr>
+  {% for o in orders %}
+  <tr>
+    <td>{{ o.id }}</td><td>{{ o.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+    <td>{{ o.customer_name }}</td><td>{{ o.phone }}</td><td>{{ o.address }}</td>
+    <td>{% for i in o.items %}{{ i.product_name }} ×{{ i.qty }}<br>{% endfor %}</td>
+    <td>{{ o.total|mnt }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
